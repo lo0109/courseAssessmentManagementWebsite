@@ -1,5 +1,5 @@
 <x-guest-layout>
-<form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}">
         @csrf
 
         <!-- Name -->
@@ -9,11 +9,11 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- User ID (sNumber for students or tID for teachers) -->
+        <!-- Email Address -->
         <div class="mt-4">
-            <x-input-label for="userID" :value="__('User ID (sNumber or tID)')" />
-            <x-text-input id="userID" class="block mt-1 w-full" type="text" name="userID" :value="old('userID')" required autocomplete="userID" />
-            <x-input-error :messages="$errors->get('userID')" class="mt-2" />
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->

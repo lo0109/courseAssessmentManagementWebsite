@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('courses', function (Blueprint $table) {
-            $table->string('courseID')->primary();
+            $table->string('course_id', 7)->primary();
             $table->string('name');
             $table->text('description');
             $table->boolean('online');
             $table->tinyInteger('workshop');
-            $table->string('teacherID');
-            $table->foreign('teacherID')->references('tID')->on('teachers');
+            $table->foreignId('teacherID')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

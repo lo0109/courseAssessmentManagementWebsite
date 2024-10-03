@@ -13,70 +13,68 @@ class EnrollmentSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S98436',
-            'courseID' => 'ICT9734',
+        DB::table('enrollments')->insert([
+            'user_id' => 200006,
+            'course_id' => 'ICT9734',
             'workshop' => 1,
         ]);
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S98436',
-            'courseID' => 'ICT5329',
+        DB::table('enrollments')->insert([
+            'user_id' => 200006,
+            'course_id' => 'ICT5329',
             'workshop' => 1,
         ]);
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S98436',
-            'courseID' => 'ICT6124',
+        DB::table('enrollments')->insert([
+            'user_id' => 200006,
+            'course_id' => 'ICT6124',
+            'workshop' => 1,
+        ]);
+        DB::table('enrollments')->insert([
+            'user_id' => 200007,
+            'course_id' => 'ICT9734',
+            'workshop' => 1,
+        ]);
+        DB::table('enrollments')->insert([
+            'user_id' => 200007,
+            'course_id' => 'ICT5329',
+            'workshop' => 1,
+        ]);
+        DB::table('enrollments')->insert([
+            'user_id' => 200007,
+            'course_id' => 'ICT6124',
+            'workshop' => 1,
+        ]);
+
+
+        DB::table('enrollments')->insert([
+            'user_id' => 200008,
+            'course_id' => 'ICT9734',
+            'workshop' => 1,
+        ]);
+        DB::table('enrollments')->insert([
+            'user_id' => 200008,
+            'course_id' => 'ICT5329',
+            'workshop' => 1,
+        ]);
+        DB::table('enrollments')->insert([
+            'user_id' => 200008,
+            'course_id' => 'ICT6124',
             'workshop' => 1,
         ]);
 
 
         DB::table('enrollment')->insert([
-            'sNumber' => 'S80729',
-            'courseID' => 'ICT9734',
-            'workshop' => 1,
-        ]);
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S80729',
-            'courseID' => 'ICT5329',
-            'workshop' => 1,
-        ]);
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S80729',
-            'courseID' => 'ICT6124',
-            'workshop' => 1,
-        ]);
-
-
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S49100',
-            'courseID' => 'ICT9734',
-            'workshop' => 1,
-        ]);
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S49100',
-            'courseID' => 'ICT5329',
-            'workshop' => 1,
-        ]);
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S49100',
-            'courseID' => 'ICT6124',
-            'workshop' => 1,
-        ]);
-
-
-        DB::table('enrollment')->insert([
-            'sNumber' => 'S42906',
-            'courseID' => 'ICT9734',
+            'user_id' => 200009,
+            'course_id' => 'ICT9734',
             'workshop' => 2,
         ]);
         DB::table('enrollment')->insert([
-            'sNumber' => 'S42906',
-            'courseID' => 'ICT5329',
+            'user_id' => 200009,
+            'course_id' => 'ICT5329',
             'workshop' => 2,
         ]);
         DB::table('enrollment')->insert([
-            'sNumber' => 'S42906',
-            'courseID' => 'ICT6124',
+            'user_id' => 200009,
+            'course_id' => 'ICT6124',
             'workshop' => 2,
         ]);
     }

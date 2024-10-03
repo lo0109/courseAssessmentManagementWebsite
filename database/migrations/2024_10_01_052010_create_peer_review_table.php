@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('peer_review', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('assessmentID')->constrained('assessments')->onDelete('cascade');
-            $table->foreignId('typeID')->constrained('peer_review_type')->onDelete('cascade');
-            $table->string('revieweeID');
-            $table->string('sNumber');
-            $table->string('score');
+            $table->foreignId('reviewee_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('reviewer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('assessment')->constrained('assessments')->onDelete('cascade');   
+            $table->foreignId('type_id')->constrained('peer_review_types')->onDelete('cascade');
+            $table->tinyInteger('score');
             $table->text('comment');
-            $table->foreign('revieweeID')->references('sNumber')->on('students');
-            $table->foreign('sNumber')->references('sNumber')->on('students');
             $table->timestamps();
         });
     }

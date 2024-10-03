@@ -8,60 +8,38 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Illuminate\Validation\ValidationException;
-use App\Models\Student;
-use App\Models\Teacher;
-
 
 class AuthenticatedSessionController extends Controller
 {
-    public function create()
+    /**
+     * Display the login view.
+     */
+    public function create(): View
     {
         return view('auth.login');
     }
 
-    public function store(Request $request)
+    /**
+     * Handle an incoming authentication request.
+     */
+    public function store(LoginRequest $request): RedirectResponse
     {
-        // Validate the login input
-        $credentials = $request->validate([
-            'userID' => ['required', 'string'],
-            'password' => ['required', 'string'],
-        ]);
+        $request->authenticate();
 
-        // Determine whether userID is for student (starts with "S") or teacher (starts with "T")
-        $userType = substr($credentials['userID'], 0, 1);
+        $request->session()->regenerate();
 
-        if ($userType === 'S') {
-            // Authenticate against students table
-            $student = Student::where('sNumber', $credentials['userID'])->first();
-
-            if ($student && \Hash::check($credentials['password'], $student->password)) {
-                Auth::login($student);
-                $request->session()->regenerate();
-                return redirect()->intended('dashboard');
-            }
-        } elseif ($userType === 'T') {
-            // Authenticate against teachers table
-            $teacher = Teacher::where('tID', $credentials['userID'])->first();
-
-            if ($teacher && \Hash::check($credentials['password'], $teacher->password)) {
-                Auth::login($teacher);
-                $request->session()->regenerate();
-                return redirect()->intended('dashboard');
-            }
-        }
-
-        // If authentication fails, throw an error
-        throw ValidationException::withMessages([
-            'userID' => __('auth.failed'),
-        ]);
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
-    public function destroy(Request $request)
+    /**
+     * Destroy an authenticated session.
+     */
+    public function destroy(Request $request): RedirectResponse
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
         return redirect('/');

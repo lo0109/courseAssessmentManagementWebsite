@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enrollment', function (Blueprint $table) {
-            // $table->id();
-            $table->string('sNumber');
-            $table->string('courseID');
-            $table->tinyinteger('workshop');
-            $table->foreign('sNumber')->references('sNumber')->on('students');
-            $table->foreign('courseID')->references('courseID')->on('courses');
-            $table->primary(['sNumber', 'courseID']);
+        Schema::create('enrollments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
+            $table->string('course_id', 7);
+            $table->tinyInteger('workshop');
+            $table->foreign('course_id')->references('course_id')->on('courses')->onDelete('cascade');
+            $table->unique(['student_id', 'course_id']);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('enrollment');
+        Schema::dropIfExists('enrollments');
     }
 };

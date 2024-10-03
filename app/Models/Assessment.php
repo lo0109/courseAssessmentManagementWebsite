@@ -9,7 +9,7 @@ class Assessment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['courseID', 'typeID', 'title', 'instruction','maxScore', 'deadline', 'reviewNumber'];
+    protected $fillable = ['course_id', 'typeID', 'title', 'instruction','maxScore', 'deadline', 'reviewNumber'];
     function peerReviews() {
         return $this->hasMany(App\Models\PeerReview::class, 'assessmentID');
     }

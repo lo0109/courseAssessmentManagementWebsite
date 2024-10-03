@@ -17,8 +17,14 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'userID' => ['required', 'string', 'max:255', 'unique:'.($this->user()->isStudent() ? 'students' : 'teachers')], // Assuming a method to check student or teacher
-            'password' => ['nullable', 'confirmed', 'min:8'], // Add password confirmation rule
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                Rule::unique(User::class)->ignore($this->user()->id),
+            ],
         ];
     }
 }

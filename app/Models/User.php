@@ -17,9 +17,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
-        'email',
         'password',
+        'teacher',
     ];
 
     /**
@@ -31,6 +32,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    function course() {
+        return $this->belongsToMany(App\Models\Course::class, 'enrollments', 'student_id', 'course_id');
+    }
 
     /**
      * Get the attributes that should be cast.

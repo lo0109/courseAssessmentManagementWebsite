@@ -12,7 +12,7 @@ class AssessmentTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('assessment_type')->insert([
+        DB::table('assessment_types')->insert([
             ['type' => 'peer-review'],  // Type 1
             ['type' => 'exam'],  // Type 2
             ['type' => 'test']      // Type 3

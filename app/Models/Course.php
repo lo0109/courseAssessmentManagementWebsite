@@ -8,14 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
-    protected $fillable = ['courseID', 'name', 'description', 'teacherID', 'workshop', 'online'];
+    protected $fillable = ['course_id', 'name', 'description', 'teacherID', 'workshop', 'online'];
     function student() {
-        return $this->belongsToMany(App\Models\Student::class, 'enrollment', 'courseID', 'sNumber');
-    }
-    function teacher() {
-        return $this->belongsTo(App\Models\Teacher::class, 'teacherID');
+        return $this->belongsToMany(\App\Models\User::class, 'enrollments', 'course_id', 'student_id');
     }
     function assessment() {
-        return $this->hasMany(App\Models\Assignment::class, 'courseID');
+        return $this->hasMany(\App\Models\Assessment::class, 'course_id');
     }
 }

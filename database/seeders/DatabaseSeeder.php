@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use App\Models\User;
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\AssessmentTypeSeeder;
@@ -15,13 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         // Seed 5 teachers
-        \App\Models\Teacher::factory(5)->create();
-
+        $this->call(UserTableSeeder::class);
         // Seed 50 students
-        \App\Models\Student::factory(50)->create();
+        User::factory(50)->create();
 
         //seed 10 courses
         \App\Models\Course::factory(10)->create();
@@ -30,10 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AssessmentTypeSeeder::class);
         //seed peer review types
         $this->call(PeerReviewTypeSeeder::class);
-        //seed test students
-        $this->call(StudentTableSeeder::class);
-        //seed test teachers
-        $this->call(TeacherTableSeeder::class);
         //seed test courses
         $this->call(CourseTableSeeder::class);
         //seed test enrollements

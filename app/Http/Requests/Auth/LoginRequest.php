@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userID' => ['required', 'string'],  // Replacing 'email' with 'userID'
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
     }
@@ -41,33 +41,15 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        // Attempt to authenticate using userID, which could be sNumber or tID
-        if (! Auth::attempt($this->credentials(), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'userID' => trans('auth.failed'),  // Adjust error to refer to 'userID'
+                'email' => trans('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
-    }
-
-    /**
-     * Get the credentials for the authentication attempt.
-     *
-     * This dynamically determines whether to authenticate as a student or teacher.
-     */
-    public function credentials(): array
-    {
-        $login = $this->input('userID');
-
-        // Check if the user is a student (sNumber) or teacher (tID)
-        if (str_starts_with($login, 'S')) {
-            return ['sNumber' => $login, 'password' => $this->input('password')];
-        }
-
-        return ['tID' => $login, 'password' => $this->input('password')];
     }
 
     /**
@@ -86,7 +68,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'userID' => trans('auth.throttle', [
+            'email' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -98,7 +80,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        // Use userID for throttling instead of email
-        return Str::transliterate(Str::lower($this->input('userID')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
     }
 }
